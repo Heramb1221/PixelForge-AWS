@@ -21,7 +21,7 @@ from app.services import auth_service
 from app.utils.validators import validate_upload_request, ValidationError
 
 logger = logging.getLogger(__name__)
-images_bp = Blueprint("images", __name__, url_prefix="/projects/<int:project_id>/images")
+images_bp = Blueprint("images", __name__, url_prefix="/projects/<project_id>/images")
 
 
 def _get_owned_project_or_404(project_id):
@@ -69,7 +69,7 @@ def presign(project_id):
     })
 
 
-@images_bp.route("/<int:image_id>/status")
+@images_bp.route("/<image_id>/status")
 @login_required
 def status(project_id, image_id):
     _get_owned_project_or_404(project_id)
@@ -95,12 +95,12 @@ def status(project_id, image_id):
     return jsonify({
         "image_id": image["id"],
         "status": image["status"],
-        "error_message": image["error_message"],
+        "error_message": image.get("error_message"),
         "variants": variants,
     })
 
 
-@images_bp.route("/<int:image_id>/delete", methods=["POST"])
+@images_bp.route("/<image_id>/delete", methods=["POST"])
 @login_required
 def delete(project_id, image_id):
     _get_owned_project_or_404(project_id)

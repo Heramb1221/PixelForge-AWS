@@ -18,7 +18,13 @@ logger = logging.getLogger(__name__)
 
 class S3Service:
     def __init__(self, region, originals_bucket, processed_bucket, url_expiry_seconds):
-        self.client = boto3.client("s3", region_name=region)
+        from botocore.config import Config
+        self.client = boto3.client(
+            "s3", 
+            region_name=region, 
+            endpoint_url=f"https://s3.{region}.amazonaws.com",
+            config=Config(s3={'addressing_style': 'virtual'}, signature_version='s3v4')
+        )
         self.originals_bucket = originals_bucket
         self.processed_bucket = processed_bucket
         self.url_expiry_seconds = url_expiry_seconds

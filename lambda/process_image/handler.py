@@ -110,7 +110,7 @@ def _naive_reencode_size(image: Image.Image, size, output_format) -> int:
 
 
 def _render_variant(source_image: Image.Image, profile, focal_point):
-    target_w, target_h = profile["target_width"], profile["target_height"]
+    target_w, target_h = int(profile["target_width"]), int(profile["target_height"])
     target_aspect = target_w / target_h
 
     if profile["smart_crop"]:

@@ -8,7 +8,7 @@
 
 source "$(dirname "$0")/config.sh"
 
-ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd -W 2>/dev/null || pwd)"
 PYTHON_VERSION="3.12"
 LAMBDA_PLATFORM="manylinux2014_x86_64"
 
@@ -23,7 +23,7 @@ package_function() {
     mkdir -p "$build_dir"
 
     if [ -s "${function_dir}/requirements.txt" ] && grep -qE '^[A-Za-z]' "${function_dir}/requirements.txt"; then
-        pip install \
+        pip.exe install --no-user \
             --platform "$LAMBDA_PLATFORM" \
             --target "$build_dir" \
             --python-version "$PYTHON_VERSION" \

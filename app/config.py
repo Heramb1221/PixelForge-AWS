@@ -20,15 +20,8 @@ class Config:
     S3_PROCESSED_BUCKET = os.environ.get("S3_PROCESSED_BUCKET")
     PRESIGNED_URL_EXPIRY_SECONDS = int(os.environ.get("PRESIGNED_URL_EXPIRY_SECONDS", "300"))
 
-    # --- Database (Amazon RDS - PostgreSQL) ---
-    DB_HOST = os.environ.get("DB_HOST")
-    DB_PORT = os.environ.get("DB_PORT", "5432")
-    DB_NAME = os.environ.get("DB_NAME")
-    DB_USER = os.environ.get("DB_USER")
-    DB_PASSWORD = os.environ.get("DB_PASSWORD")
-    DB_SSLMODE = os.environ.get("DB_SSLMODE", "require")
-    DB_POOL_MIN_CONN = int(os.environ.get("DB_POOL_MIN_CONN", "1"))
-    DB_POOL_MAX_CONN = int(os.environ.get("DB_POOL_MAX_CONN", "5"))
+    # --- Database (Amazon DynamoDB) ---
+    DYNAMODB_TABLE_NAME = os.environ.get("DYNAMODB_TABLE_NAME", "PixelForgeProjects")
 
     # --- Internal API (used by the Lambda callback) ---
     # Shared secret the process-image Lambda must present when it calls back
@@ -47,7 +40,7 @@ class Config:
         """Fail fast and loudly if required configuration is missing."""
         required = [
             "SECRET_KEY", "S3_ORIGINALS_BUCKET", "S3_PROCESSED_BUCKET",
-            "DB_HOST", "DB_NAME", "DB_USER", "DB_PASSWORD", "INTERNAL_API_KEY",
+            "DYNAMODB_TABLE_NAME", "INTERNAL_API_KEY",
         ]
         missing = [name for name in required if not getattr(cls, name)]
         if missing:

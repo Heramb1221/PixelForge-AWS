@@ -42,7 +42,7 @@ def new_project():
     return render_template("new_project.html")
 
 
-@projects_bp.route("/<int:project_id>")
+@projects_bp.route("/<project_id>")
 @login_required
 def detail(project_id):
     project = _get_owned_project_or_404(project_id)
@@ -67,7 +67,7 @@ def detail(project_id):
     )
 
 
-@projects_bp.route("/<int:project_id>/delete", methods=["POST"])
+@projects_bp.route("/<project_id>/delete", methods=["POST"])
 @login_required
 def delete(project_id):
     _get_owned_project_or_404(project_id)
@@ -76,7 +76,7 @@ def delete(project_id):
     return redirect(url_for("dashboard.home"))
 
 
-@projects_bp.route("/<int:project_id>/profiles", methods=["POST"])
+@projects_bp.route("/<project_id>/profiles", methods=["POST"])
 @login_required
 def add_profile(project_id):
     _get_owned_project_or_404(project_id)
@@ -95,7 +95,7 @@ def add_profile(project_id):
     return redirect(url_for("projects.detail", project_id=project_id))
 
 
-@projects_bp.route("/<int:project_id>/profiles/<int:profile_id>/delete", methods=["POST"])
+@projects_bp.route("/<project_id>/profiles/<profile_id>/delete", methods=["POST"])
 @login_required
 def delete_profile(project_id, profile_id):
     _get_owned_project_or_404(project_id)
@@ -104,7 +104,7 @@ def delete_profile(project_id, profile_id):
     return redirect(url_for("projects.detail", project_id=project_id))
 
 
-@projects_bp.route("/<int:project_id>/analytics")
+@projects_bp.route("/<project_id>/analytics")
 @login_required
 def analytics(project_id):
     project = _get_owned_project_or_404(project_id)

@@ -7,7 +7,10 @@
         "dynamodb:PutItem", "dynamodb:GetItem", "dynamodb:UpdateItem",
         "dynamodb:DeleteItem", "dynamodb:Query", "dynamodb:Scan"
       ],
-      "Resource": "arn:aws:dynamodb:ap-south-1:974263621635:table/PixelForgeProjects"
+      "Resource": [
+        "arn:aws:dynamodb:*:*:table/PixelForgeProjects",
+        "arn:aws:dynamodb:*:*:table/PixelForgeProjects/index/*"
+      ]
     }
   ]
 }

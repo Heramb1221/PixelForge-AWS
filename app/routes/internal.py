@@ -26,7 +26,7 @@ def _authorized(req):
     return bool(expected) and provided == expected
 
 
-@internal_bp.route("/images/<int:image_id>/result", methods=["POST"])
+@internal_bp.route("/images/<image_id>/result", methods=["POST"])
 def report_result(image_id):
     if not _authorized(request):
         logger.warning("Rejected unauthorized internal callback for image_id=%s", image_id)
@@ -71,7 +71,7 @@ def report_result(image_id):
     return jsonify({"acknowledged": True})
 
 
-@internal_bp.route("/images/<int:image_id>/start", methods=["POST"])
+@internal_bp.route("/images/<image_id>/start", methods=["POST"])
 def mark_processing(image_id):
     """Lambda calls this as soon as it picks up the S3 event, so the
     dashboard can show 'processing' instead of 'pending' while the
@@ -87,7 +87,7 @@ def mark_processing(image_id):
     return jsonify({"acknowledged": True})
 
 
-@internal_bp.route("/images/<int:image_id>/profiles", methods=["GET"])
+@internal_bp.route("/images/<image_id>/profiles", methods=["GET"])
 
 def get_variant_manifest(image_id):
     """
@@ -111,8 +111,8 @@ def get_variant_manifest(image_id):
             {
                 "id": p["id"],
                 "label": p["label"],
-                "target_width": p["target_width"],
-                "target_height": p["target_height"],
+                "target_width": p["width"],
+                "target_height": p["height"],
                 "output_format": p["output_format"],
                 "smart_crop": p["smart_crop"],
             }
@@ -136,7 +136,7 @@ def stale_images():
     return jsonify({"images": images})
 
 
-@internal_bp.route("/cleanup/images/<int:image_id>/purge", methods=["POST"])
+@internal_bp.route("/cleanup/images/<image_id>/purge", methods=["POST"])
 def purge_image(image_id):
     """
     Called by the cleanup Lambda AFTER it has already deleted the S3

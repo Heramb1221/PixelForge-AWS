@@ -23,8 +23,8 @@ def create_app(config_object=Config):
 
     # Imported lazily so that importing submodules of `app` for unit
     # testing (e.g. app.utils.validators) doesn't require psycopg2/boto3
+    # testing (e.g. app.utils.validators) doesn't require psycopg2/boto3
     # to be installed or configured.
-    from app.db import init_pool
     from app.services.s3_service import S3Service
 
     app = Flask(__name__)
@@ -32,7 +32,6 @@ def create_app(config_object=Config):
     app.permanent_session_lifetime = timedelta(days=7)
 
     # Shared resources, attached to the app object for easy access in routes.
-    init_pool(config_object)
     app.s3_service = S3Service(
         region=config_object.AWS_REGION,
         originals_bucket=config_object.S3_ORIGINALS_BUCKET,

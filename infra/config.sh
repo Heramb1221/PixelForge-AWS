@@ -2,24 +2,30 @@
 # infra/config.sh
 # -----------------
 # Shared configuration sourced by every script in infra/.
-# Fill in the placeholders below before running anything else.
-# This file intentionally contains NO real AWS account IDs, ARNs, or
-# credentials - only names/values you choose yourself.
 
 set -euo pipefail
 
 # --- Required: edit these ---
 export AWS_REGION="ap-south-1"
+
+# Handle Windows bash not resolving .exe automatically
+if command -v aws.exe &> /dev/null; then
+    aws() {
+        aws.exe "$@" | sed 's/\r$//'
+    }
+    export -f aws
+fi
+
 export PROJECT_PREFIX="pixelforge"                     # used to name all resources
 export S3_ORIGINALS_BUCKET="${PROJECT_PREFIX}-originals-985214763"   # must be globally unique
 export S3_PROCESSED_BUCKET="${PROJECT_PREFIX}-processed-985214763"   # must be globally unique
 export EC2_KEY_PAIR_NAME="pixelforge-key"   # create in EC2 console first, or via CLI
-export EC2_SSH_CIDR="36.255.185.142/32"                      # your IP in CIDR form, e.g. 203.0.113.4/32
-export INTERNAL_API_BASE_URL="http://CHANGE-ME-ec2-public-ip"        # nginx proxies :80 -> gunicorn :8000; set after EC2 is running
+export EC2_SSH_CIDR="36.255.185.142/32"                      # your IP in CIDR form
+export INTERNAL_API_BASE_URL="http://65.2.39.77"        # set after EC2 is running
+export INTERNAL_API_KEY="2b813b16-e873-4568-bbd4-79a0e6bba09c"
+export DYNAMODB_TABLE_NAME="PixelForgeProjects"
 
-export INTERNAL_API_KEY="CHANGE-ME-generate-a-long-random-string"
-
-# --- Derived names (usually no need to edit) ---
+# --- Derived names ---
 export IAM_LAMBDA_ROLE_NAME="${PROJECT_PREFIX}-lambda-process-role"
 export IAM_CLEANUP_ROLE_NAME="${PROJECT_PREFIX}-lambda-cleanup-role"
 export IAM_EC2_ROLE_NAME="${PROJECT_PREFIX}-ec2-role"
@@ -31,8 +37,7 @@ export EC2_INSTANCE_NAME="${PROJECT_PREFIX}-app-server"
 export EC2_SECURITY_GROUP_NAME="${PROJECT_PREFIX}-app-sg"
 export EC2_INSTANCE_TYPE="t3.micro"
 
-# Resolved lazily by scripts that need it (avoids a hard dependency on
-# `aws sts` succeeding just to source this file).
+# Resolved lazily
 get_account_id() {
     aws sts get-caller-identity --query Account --output text
 }

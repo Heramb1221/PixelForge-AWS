@@ -12,7 +12,7 @@
 
 source "$(dirname "$0")/config.sh"
 
-ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd -W 2>/dev/null || pwd)"
 ACCOUNT_ID="$(get_account_id)"
 
 LAMBDA_ROLE_ARN="arn:aws:iam::${ACCOUNT_ID}:role/${IAM_LAMBDA_ROLE_NAME}"
@@ -61,7 +61,7 @@ PROCESS_ENV="Variables={S3_PROCESSED_BUCKET=${S3_PROCESSED_BUCKET},INTERNAL_API_
 create_or_update_function \
     "$LAMBDA_PROCESS_FUNCTION_NAME" \
     "$LAMBDA_ROLE_ARN" \
-    "${ROOT_DIR}/lambda/process_image/package.zip" \
+    "F:/Symbiosis AWS Notes/AWS programs/CAPSTONE PROJECTS/pixelforge/lambda/process_image/package.zip" \
     "handler.handler" \
     60 \
     768 \
@@ -72,7 +72,7 @@ CLEANUP_ENV="Variables={S3_ORIGINALS_BUCKET=${S3_ORIGINALS_BUCKET},S3_PROCESSED_
 create_or_update_function \
     "$LAMBDA_CLEANUP_FUNCTION_NAME" \
     "$CLEANUP_ROLE_ARN" \
-    "${ROOT_DIR}/lambda/cleanup_orphans/package.zip" \
+    "F:/Symbiosis AWS Notes/AWS programs/CAPSTONE PROJECTS/pixelforge/lambda/cleanup_orphans/package.zip" \
     "handler.handler" \
     120 \
     256 \
