@@ -1,0 +1,1 @@
+{"Rules":[{"ID":"abort-incomplete","Status":"Enabled","Filter":{},"AbortIncompleteMultipartUpload":{"DaysAfterInitiation":1}}]}

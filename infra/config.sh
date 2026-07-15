@@ -11,10 +11,10 @@ set -euo pipefail
 # --- Required: edit these ---
 export AWS_REGION="ap-south-1"
 export PROJECT_PREFIX="pixelforge"                     # used to name all resources
-export S3_ORIGINALS_BUCKET="${PROJECT_PREFIX}-originals-CHANGE-ME"   # must be globally unique
-export S3_PROCESSED_BUCKET="${PROJECT_PREFIX}-processed-CHANGE-ME"   # must be globally unique
-export EC2_KEY_PAIR_NAME="CHANGE-ME-your-ec2-keypair"   # create in EC2 console first, or via CLI
-export EC2_SSH_CIDR="CHANGE-ME/32"                      # your IP in CIDR form, e.g. 203.0.113.4/32
+export S3_ORIGINALS_BUCKET="${PROJECT_PREFIX}-originals-985214763"   # must be globally unique
+export S3_PROCESSED_BUCKET="${PROJECT_PREFIX}-processed-985214763"   # must be globally unique
+export EC2_KEY_PAIR_NAME="pixelforge-key"   # create in EC2 console first, or via CLI
+export EC2_SSH_CIDR="36.255.185.142/32"                      # your IP in CIDR form, e.g. 203.0.113.4/32
 export INTERNAL_API_BASE_URL="http://CHANGE-ME-ec2-public-ip"        # nginx proxies :80 -> gunicorn :8000; set after EC2 is running
 
 export INTERNAL_API_KEY="CHANGE-ME-generate-a-long-random-string"

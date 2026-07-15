@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+apt-get update -y
+apt-get install -y python3-venv python3-pip nginx git
+mkdir -p /opt/pixelforge
+chown ubuntu:ubuntu /opt/pixelforge

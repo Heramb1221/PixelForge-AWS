@@ -43,7 +43,6 @@ echo "==> Initializing database schema"
 set -a
 source "${APP_DIR}/.env"
 set +a
-"${VENV_DIR}/bin/python" "${APP_DIR}/db/init_db.py"
 
 echo "==> Writing systemd service"
 cat > "/etc/systemd/system/${SERVICE_NAME}.service" <<EOF
