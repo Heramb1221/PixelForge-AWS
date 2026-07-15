@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block title %}{{ project.name }} &mdash; PixelForge{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>{{ project.name }}</h1>
+    <div class="header-actions">
+        <a class="btn-secondary" href="{{ url_for('projects.analytics', project_id=project.id) }}">Analytics</a>
+        <form action="{{ url_for('projects.delete', project_id=project.id) }}" method="post"
+              onsubmit="return confirm('Delete this project and all its images? This cannot be undone.');">
+            <button type="submit" class="btn-danger">Delete project</button>
+        </form>
+    </div>
+</div>
+<p class="muted">{{ project.description or "" }}</p>
+
+<section class="card">
+    <h2>Variant profiles</h2>
+    {% if profiles %}
+    <table class="table">
+        <thead>
+            <tr><th>Label</th><th>Size</th><th>Format</th><th>Smart crop</th><th></th></tr>
+        </thead>
+        <tbody>
+        {% for p in profiles %}
+            <tr>
+                <td>{{ p.label }}</td>
+                <td>{{ p.target_width }}&times;{{ p.target_height }}</td>
+                <td>{{ p.output_format | upper }}</td>
+                <td>{{ "Yes" if p.smart_crop else "No" }}</td>
+                <td>
+                    <form action="{{ url_for('projects.delete_profile', project_id=project.id, profile_id=p.id) }}"
+                          method="post" onsubmit="return confirm('Remove this variant profile?');">
+                        <button type="submit" class="link-button danger">Remove</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="muted">No variant profiles yet. Add one below before uploading images.</p>
+    {% endif %}
+
+    <details class="add-profile">
+        <summary>+ Add variant profile</summary>
+        <form action="{{ url_for('projects.add_profile', project_id=project.id) }}" method="post" class="inline-form">
+            <label>Label
+                <input type="text" name="label" placeholder="thumbnail" required maxlength="80">
+            </label>
+            <label>Width (px)
+                <input type="number" name="width" min="16" max="4000" required>
+            </label>
+            <label>Height (px)
+                <input type="number" name="height" min="16" max="4000" required>
+            </label>
+            <label>Format
+                <select name="output_format">
+                    <option value="webp">WebP</option>
+                    <option value="jpeg">JPEG</option>
+                    <option value="png">PNG</option>
+                </select>
+            </label>
+            <label class="checkbox-label">
+                <input type="checkbox" name="smart_crop" checked>
+                Smart crop (saliency-aware)
+            </label>
+            <button type="submit" class="btn-primary">Add profile</button>
+        </form>
+    </details>
+</section>
+
+<section class="card">
+    <h2>Upload images</h2>
+    {% if profiles %}
+    <div id="dropzone" class="dropzone">
+        <p>Drag &amp; drop images here, or click to choose files.</p>
+        <p class="hint">JPEG, PNG, or WebP. Up to {{ max_upload_mb }} MB each.</p>
+        <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" multiple hidden>
+    </div>
+    <div id="upload-list" class="upload-list"></div>
+    {% else %}
+    <p class="muted">Add a variant profile above before uploading.</p>
+    {% endif %}
+</section>
+
+<section class="card">
+    <h2>Images</h2>
+    {% if images_with_variants %}
+    <div class="image-grid">
+        {% for entry in images_with_variants %}
+        <div class="image-card" data-image-id="{{ entry.image.id }}">
+            <div class="image-card-header">
+                <strong>{{ entry.image.original_filename }}</strong>
+                <span class="status-pill status-{{ entry.image.status }}">{{ entry.image.status }}</span>
+            </div>
+            {% if entry.image.status == 'failed' %}
+            <p class="error-text">{{ entry.image.error_message }}</p>
+            {% endif %}
+            {% if entry.variants %}
+            <div class="variant-list">
+                {% for v in entry.variants %}
+                <a href="{{ v.download_url }}" target="_blank" class="variant-chip">
+                    {{ v.label }} &middot; {{ v.width }}&times;{{ v.height }} &middot; {{ v.output_format | upper }}
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <button type="button" class="link-button danger small delete-image-btn"
+                    data-image-id="{{ entry.image.id }}">Delete</button>
+
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="muted">No images uploaded yet.</p>
+    {% endif %}
+</section>
+
+<script>
+    window.PIXELFORGE_PROJECT_ID = {{ project.id }};
+</script>
+<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+{% endblock %}

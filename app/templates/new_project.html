@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}New project &mdash; PixelForge{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>New project</h1>
+</div>
+
+<form method="post" class="stacked-form card">
+    <label for="name">Project name</label>
+    <input type="text" id="name" name="name" required maxlength="150" placeholder="e.g. Blog Hero Images">
+
+    <label for="description">Description (optional)</label>
+    <textarea id="description" name="description" maxlength="1000" rows="3"
+              placeholder="What is this project for?"></textarea>
+
+    <button type="submit" class="btn-primary">Create project</button>
+</form>
+
+<p class="muted">
+    After creating the project, you'll add one or more <strong>variant profiles</strong>
+    &mdash; each one describes an output size/format (e.g. "thumbnail" at 150&times;150 WebP).
+    Every image you upload to this project is automatically transformed into all of them.
+</p>
+{% endblock %}

@@ -1,0 +1,5 @@
+# The cleanup-orphans Lambda only uses boto3 and the Python standard
+# library (urllib), both of which are already present in the standard
+# AWS Lambda Python runtime. No extra packages need to be bundled -
+# this file exists so the packaging script has a consistent convention
+# across both Lambdas, and to document that decision explicitly.

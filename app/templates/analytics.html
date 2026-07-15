@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Analytics &mdash; {{ project.name }}{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>{{ project.name }} &mdash; Analytics</h1>
+    <a class="btn-secondary" href="{{ url_for('projects.detail', project_id=project.id) }}">Back to project</a>
+</div>
+
+<div class="stat-grid">
+    <div class="stat-card">
+        <span class="stat-value">{{ stats.total_images }}</span>
+        <span class="stat-label">Images uploaded</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-value">{{ stats.completed_images }}</span>
+        <span class="stat-label">Completed</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-value">{{ stats.failed_images }}</span>
+        <span class="stat-label">Failed</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-value">{{ stats.total_variants_generated }}</span>
+        <span class="stat-label">Variants generated</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-value">{{ (stats.total_original_bytes / 1024 / 1024) | round(2) }} MB</span>
+        <span class="stat-label">Original storage</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-value">{{ (stats.total_variant_bytes / 1024 / 1024) | round(2) }} MB</span>
+        <span class="stat-label">Variant storage</span>
+    </div>
+    <div class="stat-card highlight">
+        <span class="stat-value">{{ (stats.total_bytes_saved / 1024 / 1024) | round(2) }} MB</span>
+        <span class="stat-label">Estimated bandwidth saved</span>
+    </div>
+</div>
+
+<p class="muted small">
+    "Bandwidth saved" compares each generated variant against a same-dimension,
+    same-original-format re-encode &mdash; approximating what a naive manual
+    export would have produced without format optimization.
+</p>
+{% endblock %}

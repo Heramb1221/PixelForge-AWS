@@ -1,0 +1,7 @@
+# Dependencies for the process-image Lambda.
+# Packaged into a deployment zip / Lambda layer by infra/package_lambda.sh
+# (Pillow and numpy must be built for the Lambda runtime's architecture -
+# the packaging script uses `pip install --platform` to fetch manylinux
+# wheels rather than relying on the local machine's build).
+Pillow==10.4.0
+numpy==1.26.4
