@@ -9,28 +9,6 @@ aspect ratio changes.
 
 ---
 
-## Table of Contents
-
-- [Project Description](#project-description)
-- [Problem Statement](#problem-statement)
-- [Why I Built This](#why-i-built-this)
-- [Objectives](#objectives)
-- [Features](#features)
-- [Architecture](#architecture)
-- [AWS Services Used](#aws-services-used)
-- [Folder Structure](#folder-structure)
-- [Technology Stack](#technology-stack)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Deployment](#deployment)
-- [Screenshots](#screenshots)
-- [API Endpoints](#api-endpoints)
-- [Challenges Faced](#challenges-faced)
-- [Future Improvements](#future-improvements)
-- [What I Learned](#what-i-learned)
-- [Contact](#contact)
-
----
 
 ## Project Description
 
@@ -237,15 +215,6 @@ bash setup_eventbridge.sh
 
 To tear everything down (and stop paying for it): `bash infra/teardown.sh`
 
-## Screenshots
-
-_Add screenshots here after deployment:_
-
-- `docs/screenshots/dashboard.png`
-- `docs/screenshots/project-detail.png`
-- `docs/screenshots/upload-flow.png`
-- `docs/screenshots/analytics.png`
-
 ## API Endpoints
 
 ### User-facing (session-authenticated)
@@ -318,5 +287,10 @@ ML approach given the Free Tier compute budget.
 
 ## Contact
 
-Project maintained as a university capstone. Open an issue on the
-repository for questions.
+**Heramb Chaudhari**
+
+[![GitHub](https://img.shields.io/badge/GitHub-Heramb1221-black?style=for-the-badge&logo=github)](https://github.com/Heramb1221)
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Heramb%20Chaudhari-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/heramb-chaudhari)
+
+[![Email](https://img.shields.io/badge/Email-hchaudhari1221%40gmail.com-red?style=for-the-badge&logo=gmail)](mailto:hchaudhari1221@gmail.com)
