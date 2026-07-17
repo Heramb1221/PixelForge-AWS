@@ -246,6 +246,21 @@ To tear everything down (and stop paying for it): `bash infra/teardown.sh`
 | GET | `/internal/cleanup/stale-images` | List images eligible for cleanup |
 | POST | `/internal/cleanup/images/<id>/purge` | Remove a purged image's DB row |
 
+---
+
+## Application Screenshots
+
+| Feature | Preview |
+|----------|---------|
+| Login Page | <img width="1891" height="855" alt="image" src="https://github.com/user-attachments/assets/920db21d-4f6d-4de0-982b-1430575b247e" /> |
+| Projects List | <img width="1917" height="857" alt="image" src="https://github.com/user-attachments/assets/1e2277f4-bd3e-4bbf-bcce-1c50f82b1e55" /> |
+| Create Project | <img width="1901" height="843" alt="image" src="https://github.com/user-attachments/assets/975ad6aa-fdeb-4bd6-82f4-4d79a6390864" /> |
+| Variant Profile Configuration | <img width="1900" height="853" alt="image" src="https://github.com/user-attachments/assets/ed4bcbda-4650-42db-a19d-b812eed32bae" /> |
+| Generated Variants | <img width="1140" height="443" alt="image" src="https://github.com/user-attachments/assets/b71adc33-ce44-4a83-a5bf-8d5382f54647" /> |
+| Analytics Dashboard | <img width="1907" height="852" alt="image" src="https://github.com/user-attachments/assets/f2c020e1-1531-4c5f-b803-553093987e2f" /> |
+
+---
+
 ## Challenges Faced
 
 - **Avoiding a Lambda-to-RDS direct connection.** Putting the Lambda
